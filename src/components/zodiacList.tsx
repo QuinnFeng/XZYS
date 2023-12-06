@@ -2,11 +2,20 @@ import {
   ChineseConstellationNames,
   ZodiacFortunes,
   formattedChinaDate,
+  getCurrentConstellation,
   zodiacInfo,
 } from "../util/const";
 import { stars } from "../util/util";
+import { IoIosCheckmarkCircle } from "react-icons/io";
+import { CheckMark } from "./checkmark";
+import { useEffect } from "react";
+import { getCurrentChinaTime } from "../api";
+import toast from "react-hot-toast";
+import { useZodiacs } from "./zodiacsProvider";
 
 export const ZodiacList = () => {
+  const { favZodiacs } = useZodiacs();
+
   return (
     <>
       <section id="zodiac-list">
@@ -20,6 +29,11 @@ export const ZodiacList = () => {
               key={index}
               className={`zodiac ${index % 3 == 2 ? "" : "fade-right-border"}`}
             >
+              <span
+                className={`check ${favZodiacs.includes(index) ? "on" : ""}`}
+              >
+                <CheckMark index={index} />
+              </span>
               <div className="zodiac-img-container">
                 <img
                   src={zodiacInfo[z]?.image}
@@ -30,7 +44,7 @@ export const ZodiacList = () => {
               <div className="zodiac-today">
                 <div className="top">
                   <p>{z}</p>
-                  <span>{zodiacInfo[z]?.date}</span>
+                  <span className="pink-bg">{zodiacInfo[z]?.date}</span>
                 </div>
                 <span className="rating">
                   <span className="zodiac-all">整体运势:</span>
@@ -40,7 +54,13 @@ export const ZodiacList = () => {
                 </span>
                 <span className="">
                   {ZodiacFortunes[z]?.today.summary.substring(0, 25)}...[
-                  <a href="">详细</a>]
+                  <a
+                    href=""
+                    className="pink"
+                  >
+                    详细
+                  </a>
+                  ]
                 </span>
               </div>
             </div>
@@ -48,7 +68,6 @@ export const ZodiacList = () => {
         </div>
         <hr className="fade" />
       </section>
-
     </>
   );
 };

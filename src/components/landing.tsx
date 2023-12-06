@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { images } from "../util/const";
 import { CurrentZodiac } from "./currentZodiac";
 import { Footer } from "./footer";
 import { ZodiacList } from "./zodiacList";
+import { ZoidacsProvider } from "./zodiacsProvider";
 
 export const Landing = () => {
+  const [tab, setTab] = useState("today");
+
   return (
     <>
       <div className="container">
@@ -21,9 +25,14 @@ export const Landing = () => {
           </div>
           <button className="auth"></button>
         </section>
-        <CurrentZodiac />
-        <hr className="separator" />
-        <ZodiacList />
+        <ZoidacsProvider>
+          <CurrentZodiac
+            tab={tab}
+            setTab={setTab}
+          />
+          <hr className="separator" />
+          <ZodiacList />
+        </ZoidacsProvider>
         <Footer />
       </div>
     </>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  ChineseConstellationNames,
   ZodiacFortunes,
   getCurrentConstellation,
   zodiacInfo,
@@ -7,18 +8,23 @@ import {
 import { ZodiacFortune } from "../util/model";
 import { numberOfActiveStar, stars } from "../util/util";
 import { FaStar } from "react-icons/fa";
+import { useZodiacs } from "./zodiacsProvider";
 
-export const CurrentZodiac = () => {
+interface CurrentZodiacInterface {
+  tab: string;
+  setTab: (tab: string) => void;
+}
+
+export const CurrentZodiac = ({ tab, setTab }: CurrentZodiacInterface) => {
   const [zodiac, setZodiac] = useState("");
+  const { favZodiacs, removeFromFavs } = useZodiacs();
 
   useEffect(() => {
-    const fetchZodiac = async () => {
-      setZodiac(getCurrentConstellation());
-    };
-    fetchZodiac();
-  }, []);
+    setZodiac(ChineseConstellationNames[favZodiacs[0]]);
+  }, [favZodiacs]);
 
   const zodiacToday = ZodiacFortunes[zodiac]?.today as ZodiacFortune["today"];
+
   return (
     <>
       <section id="curr-zodiac">
@@ -36,11 +42,36 @@ export const CurrentZodiac = () => {
         </div>
         <div className="right">
           <div className="duration">
-            <span className="wrapper active">今日运势</span>
-            <span className="wrapper">明日运势</span>
-            <span className="wrapper">本周运势</span>
-            <span className="wrapper">今月运势</span>
-            <span className="wrapper">今年运势</span>
+            <span
+              className={`wrapper ${tab == "today" ? "active" : ""}`}
+              onClick={() => setTab("today")}
+            >
+              今日运势
+            </span>
+            <span
+              className={`wrapper ${tab == "tomorrow" ? "active" : ""}`}
+              onClick={() => setTab("tomorrow")}
+            >
+              明日运势
+            </span>
+            <span
+              className={`wrapper ${tab == "week" ? "active" : ""}`}
+              onClick={() => setTab("week")}
+            >
+              本周运势
+            </span>
+            <span
+              className={`wrapper ${tab == "month" ? "active" : ""}`}
+              onClick={() => setTab("month")}
+            >
+              本月运势
+            </span>
+            <span
+              className={`wrapper ${tab == "year" ? "active" : ""}`}
+              onClick={() => setTab("year")}
+            >
+              今年运势
+            </span>
           </div>
           <div className="fortune">
             <span className="rating">
@@ -68,8 +99,13 @@ export const CurrentZodiac = () => {
             <p>
               <span className="rating-title">综合运势:</span>
               <span className="white">
-                {zodiacToday?.summary.substring(0, 80)}...[
-                <a href="">更多详情</a>]
+                {zodiacToday?.summary.substring(0, 80)}...
+                <a
+                  href=""
+                  className="pink-bg more"
+                >
+                  更多详情
+                </a>
               </span>
             </p>
           </div>
