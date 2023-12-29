@@ -9,21 +9,28 @@ import { ZodiacFortune } from "../util/model";
 import { numberOfActiveStar, stars } from "../util/util";
 import { FaStar } from "react-icons/fa";
 import { useZodiacs } from "./zodiacsProvider";
+import { LiaTimesCircleSolid } from "react-icons/lia";
 
 interface CurrentZodiacInterface {
   tab: string;
   setTab: (tab: string) => void;
 }
 
-export const CurrentZodiac = ({ tab, setTab }: CurrentZodiacInterface) => {
-  const [zodiac, setZodiac] = useState("");
+export const CurrentZodiac = () => {
   const { favZodiacs, removeFromFavs } = useZodiacs();
+  const [tab, setTab] = useState("today");
+  const [zodiac, setZodiac] = useState("");
+  const [subIndex, setSubIndex] = useState<number>();
 
   useEffect(() => {
-    setZodiac(ChineseConstellationNames[favZodiacs[0]]);
+    changeZodiac(favZodiacs[0]);
   }, [favZodiacs]);
 
   const zodiacToday = ZodiacFortunes[zodiac]?.today as ZodiacFortune["today"];
+  const changeZodiac = (index: number) => {
+    setSubIndex(index);
+    setZodiac(ChineseConstellationNames[index]);
+  };
 
   return (
     <>
@@ -110,7 +117,23 @@ export const CurrentZodiac = ({ tab, setTab }: CurrentZodiacInterface) => {
             </p>
           </div>
         </div>
-        <div className="favs"></div>
+        <div className="favs">
+          {favZodiacs.map((index: number) => (
+            <div
+              key={index}
+              className={`zodiac-sub ${index == subIndex ? "active" : ""}`}
+              onClick={() => changeZodiac(index)}
+            >
+              <span className="white">{ChineseConstellationNames[index]}</span>
+              <span
+                className="unsub"
+                onClick={() => removeFromFavs(index)}
+              >
+                &times;
+              </span>
+            </div>
+          ))}
+        </div>
       </section>
     </>
   );

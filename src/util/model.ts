@@ -65,3 +65,11 @@ interface Mima {
 export type ZodiacFortunesType = {
   [key: string]: ZodiacFortune;
 };
+
+export interface user {
+  id?: number;
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+}

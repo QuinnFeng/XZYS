@@ -4,9 +4,11 @@ import { CurrentZodiac } from "./currentZodiac";
 import { Footer } from "./footer";
 import { ZodiacList } from "./zodiacList";
 import { ZoidacsProvider } from "./zodiacsProvider";
+import { SignUp } from "./signup";
+import { LogIn } from "./login";
 
 export const Landing = () => {
-  const [tab, setTab] = useState("today");
+  const [tab, setTab] = useState("main");
 
   return (
     <>
@@ -23,16 +25,28 @@ export const Landing = () => {
           <div>
             <p className="header-text">聆听星空的密语</p>
           </div>
-          <button className="auth"></button>
+          <div className="auth">
+            <span onClick={() => setTab("signIn")}>登录</span>
+            <span>|</span>
+            <span onClick={() => setTab("signUp")}>注册</span>
+          </div>
         </section>
-        <ZoidacsProvider>
-          <CurrentZodiac
-            tab={tab}
-            setTab={setTab}
-          />
-          <hr className="separator" />
-          <ZodiacList />
-        </ZoidacsProvider>
+        {(() => {
+          switch (tab) {
+            case "main":
+              return (
+                <ZoidacsProvider>
+                  <CurrentZodiac />
+                  <hr className="separator" />
+                  <ZodiacList />
+                </ZoidacsProvider>
+              );
+            case "signIn":
+              return <LogIn />;
+            default:
+              return <SignUp />;
+          }
+        })()}
         <Footer />
       </div>
     </>

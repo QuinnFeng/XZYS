@@ -34,6 +34,15 @@
 
 .auth {
   margin-left: auto;
+  color: grey;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.auth span:first-child:hover,
+.auth span:nth-child(3):hover {
+  cursor: pointer;
+  color: black;
 }
 
 .center {
@@ -154,8 +163,49 @@
 }
 
 .favs {
-  margin-left: 4rem;
+  margin-left: 3rem;
   width: 10rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-right: 0.625rem;
+  align-self: flex-start;
+}
+
+.zodiac-sub {
+  display: flex;
+  padding: 0 5px;
+  border-radius: 5px;
+  background-color: var(--light-blue);
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.zodiac-sub.active {
+  background-color: var(--pink);
+}
+
+.zodiac-sub .white {
+  line-height: 1.6rem;
+  padding: 0 0.3125rem;
+  font-weight: 600;
+}
+
+.unsub {
+  text-align: center;
+  color: var(--blue);
+  background-color: white;
+  font-size: 1rem;
+  line-height: 1;
+  width: 1.25rem;
+  padding: 0.125rem 0;
+  border-radius: 0.625rem;
+  font-weight: 700;
+  opacity: 0;
+}
+
+.zodiac-sub:hover .unsub {
+  opacity: 1;
 }
 
 .separator {
@@ -321,6 +371,65 @@
 .wen {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.form-section {
+  height: calc(100vh - 9.25rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-div {
+  width: 60%;
+}
+
+.common-form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #cccccc;
+  padding: 1rem;
+}
+
+.common-form input {
+  padding-left: 0.625rem;
+  line-height: 1.75rem;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  margin: 0.125rem 0 0.625rem;
+}
+
+.common-form input:focus {
+  outline: none;
+  border: 1px solid var(--light-blue);
+  box-shadow: 0 0 8px rgba(170, 212, 237, 1);
+}
+
+.form-div .title {
+  background-color: var(--light-blue);
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  line-height: 2.5rem;
+  padding-left: 1rem;
+  border: 1px solid #cccccc;
+  border-bottom: none;
+}
+
+.submit-button {
+  background-color: var(--light-blue);
+  color: white;
+  background-color: #00bdfe;
+  transition: background-color 0.3s;
+  width: 4.5rem;
+  line-height: 2.25rem;
+  border-radius: 5px;
+  border: none;
+  letter-spacing: 3px;
+}
+
+.submit-button:hover {
+  background-color: #286090;
 }
 
 @media screen and (min-width: 768px) {
