@@ -1,7 +1,10 @@
 import { FormEvent, FormEventHandler, useState } from "react";
 import { userRequests } from "../userapi";
 import { user } from "../util/model";
-import toast from "react-hot-toast/headless";
+import toast, { Toaster } from "react-hot-toast";
+import PhoneInput from "react-phone-number-input";
+import parsePhoneNumberFromString, { E164Number } from "libphonenumber-js";
+import zh from "react-phone-number-input/locale/zh";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
@@ -12,10 +15,15 @@ export const SignUp = () => {
   const formSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newUser: Partial<user> = { name, email, phone, password };
-    userRequests
-      .createUser(newUser)
-      .then(() => toast.success(`注册成功`))
-      .then((error) => console.error(error));
+    userRequests.createUser(newUser).catch((error) => console.error(error));
+    resetInputs();
+  };
+
+  const resetInputs = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setPassword("");
   };
 
   return (
@@ -29,6 +37,7 @@ export const SignUp = () => {
           action=""
           id="create-user"
           className="common-form"
+          onSubmit={(e) => formSubmitHandler(e)}
         >
           <label htmlFor="name">姓名</label>
           <input
@@ -47,12 +56,14 @@ export const SignUp = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="phone">电话</label>
-          <input
+          <PhoneInput
             id="phone"
-            type="text"
+            country={"CN"}
             value={phone}
             placeholder="请输入电话"
-            onChange={(e) => setPhone(e.target.value)}
+            defaultCountry="CN"
+            labels={zh}
+            onChange={(e) => setPhone(e!)}
           />
           <label htmlFor="password">密码</label>
           <input
@@ -62,14 +73,27 @@ export const SignUp = () => {
             placeholder="请输入6-20位包含字母和数字的密码"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button
+          <input
             type="submit"
-            className="submit-button"
-          >
-            注册
-          </button>
+            className="input-button"
+            value="注册"
+          />
         </form>
       </div>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          iconTheme: {
+            primary: "blue",
+            secondary: "white",
+          },
+          style: {
+            background: "forestgreen",
+            color: "whitesmoke",
+          },
+        }}
+      />
     </section>
   );
 };

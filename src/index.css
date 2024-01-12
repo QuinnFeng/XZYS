@@ -3,6 +3,11 @@
   margin-right: 10px;
 }
 
+.center-flex {
+  display: flex;
+  align-items: center;
+}
+
 .white {
   color: white;
 }
@@ -17,6 +22,7 @@
   background-image: url(./assets/top_bg.png);
   background-size: cover;
   background-repeat: repeat-x;
+  margin-bottom: 1rem;
 }
 
 .header-text {
@@ -374,7 +380,7 @@
 }
 
 .form-section {
-  height: calc(100vh - 9.25rem);
+  height: max(28.6875rem, calc(100vh - 9.25rem));
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -392,7 +398,8 @@
   padding: 1rem;
 }
 
-.common-form input {
+.common-form input,
+.common-form button {
   padding-left: 0.625rem;
   line-height: 1.75rem;
   border-radius: 5px;
@@ -416,7 +423,7 @@
   border-bottom: none;
 }
 
-.submit-button {
+.input-button {
   background-color: var(--light-blue);
   color: white;
   background-color: #00bdfe;
@@ -428,8 +435,39 @@
   letter-spacing: 3px;
 }
 
-.submit-button:hover {
+.input-button:hover {
   background-color: #286090;
+}
+
+.PhoneInputCountry {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+  border: 1px solid var(--grey);
+  border-radius: 5px;
+  z-index: 2;
+  padding: 5px;
+  gap: 0.3125rem;
+  margin-bottom: 0.25rem;
+}
+
+.PhoneInputCountry select {
+  border: none;
+  width: 100%;
+}
+
+.PhoneInputCountryIconImg {
+  width: 2.4rem;
+  height: 1.6rem;
+}
+
+.forgotten {
+  width: auto;
+  letter-spacing: 1px;
+}
+
+.center-flex .input-button {
+  margin-right: 0.3125rem;
 }
 
 @media screen and (min-width: 768px) {

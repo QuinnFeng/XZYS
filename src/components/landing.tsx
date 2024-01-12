@@ -42,7 +42,9 @@ export const Landing = () => {
                 </ZoidacsProvider>
               );
             case "signIn":
-              return <LogIn />;
+              return <LogIn setTab={setTab} />;
+            case "resetPassword":
+              return <></>;
             default:
               return <SignUp />;
           }

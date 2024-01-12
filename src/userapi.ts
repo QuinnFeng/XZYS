@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { user } from "./util/model";
 
 const baseUrl = "http://localhost:3000";
@@ -27,7 +28,7 @@ const createUser = ({ name, email, phone, password }: Partial<user>) => {
     method: "POST",
     headers,
     body: JSON.stringify({ name, email, phone, password }),
-  }).then((data) => data.json());
+  }).then(() => toast.success(`注册成功`));
 };
 
 const deleteUser = (id: number) => {
